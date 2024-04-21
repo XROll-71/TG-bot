@@ -27,6 +27,14 @@ async def help(update, context):
     )
     await update.message.reply_text(help_message, reply_markup=get_main_keyboard_markup())
 
+# Функция-обработчик команды /gif
+async def send_gif(update, context):
+    gif_url = get_random_gif()
+    if gif_url:
+        await context.bot.send_document(chat_id=update.effective_chat.id, document=gif_url)
+    else:
+        await update.message.reply_text("Извините, не удалось получить гифку на данный момент.")
+
 # Список рандомных фраз
 random_responses = [
     "Привет!",
