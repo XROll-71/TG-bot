@@ -15,7 +15,18 @@ async def start(update, context):
         f"Привет, {user_name}! Я бот от DDCompany. Рад вас видеть!",
         reply_markup=get_main_keyboard_markup()
     )
-    
+# Функция-обработчик команды /help
+async def help(update, context):
+    help_message = (
+        "Список доступных команд:\n"
+        "/start - Начать взаимодействие с ботом\n"
+        "/help - Получить справку о доступных командах\n"
+        "/gif - Получить случайную гифку\n"
+        "/calc N - Посчитать сумму от 1 до N\n"
+        "/calc_expr выражение - Решить математическое выражение"
+    )
+    await update.message.reply_text(help_message, reply_markup=get_main_keyboard_markup())
+
 # Список рандомных фраз
 random_responses = [
     "Привет!",
