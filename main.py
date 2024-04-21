@@ -26,3 +26,11 @@ random_responses = [
     "Я здесь, чтобы помочь вам!",
     "Случайный ответ на ваше сообщение!"
 ]
+
+# Функция для получения разметки клавиатуры с кнопками /gif и /help
+def get_main_keyboard_markup():
+    keyboard = [
+        [InlineKeyboardButton("Получить случайную гифку", callback_data='gif')],
+        [InlineKeyboardButton("Помощь", callback_data='help')]
+    ]
+    return InlineKeyboardMarkup(keyboard)
