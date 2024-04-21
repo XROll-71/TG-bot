@@ -161,3 +161,19 @@ def main():
     # Создаём обработчик команды /calc_expr
     calc_expr_handler = CommandHandler("calc_expr", calculate_expression)
     message_handler = MessageHandler(filters.Text() & ~filters.Command(), handle_message)
+
+# Регистрируем обработчики в приложении
+    application.add_handler(start_handler)
+    application.add_handler(help_handler)
+    application.add_handler(gif_handler)
+    application.add_handler(message_handler)
+    application.add_handler(gif_button_handler)
+    application.add_handler(help_button_handler)
+    application.add_handler(count_handler)
+    application.add_handler(calc_handler)
+    application.add_handler(calc_expr_handler)
+
+    application.run_polling()
+
+# Запускаем функцию main() в случае запуска скрипта.
+if name == 'main':
