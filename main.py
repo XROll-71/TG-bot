@@ -131,3 +131,33 @@ def get_youtube_button():
         [InlineKeyboardButton("Перейти на YouTube", url="https://www.youtube.com/")]
     ]
     return InlineKeyboardMarkup(keyboard)
+
+def main():
+    # Создаём объект Application с использованием токена
+    application = Application.builder().token("5620066176:AAF90Pk79HdfdiJ1p91F5MyW_ecct7qxP70").build()
+
+    # Создаём обработчик команды /start
+    start_handler = CommandHandler("start", start)
+
+    # Создаём обработчик команды /help
+    help_handler = CommandHandler("help", help)
+
+    # Создаём обработчик команды /gif
+    gif_handler = CommandHandler("gif", send_gif)
+
+    # Создаём обработчик для любого сообщения
+    message_handler = MessageHandler(filters.Text() & ~filters.Command(), reply_with_random_response)
+
+    # Создаём обработчик для нажатий на кнопку /gif
+    gif_button_handler = CallbackQueryHandler(button_click, pattern="^gif$")
+
+    # Создаём обработчик для нажатий на кнопку /help
+    help_button_handler = CallbackQueryHandler(button_click, pattern="^help$")
+
+    count_handler = CommandHandler("count", count_to)
+
+    calc_handler = CommandHandler("calc", calculator)
+
+    # Создаём обработчик команды /calc_expr
+    calc_expr_handler = CommandHandler("calc_expr", calculate_expression)
+    message_handler = MessageHandler(filters.Text() & ~filters.Command(), handle_message)
