@@ -62,6 +62,15 @@ random_responses = [
     "Случайный ответ на ваше сообщение!"
 ]
 
+# Функция-обработчик для любого сообщения, кроме "мне скучно"
+async def reply_with_random_response(update, context):
+    message_text = update.message.text.lower()
+    if "мне скучно" not in message_text:
+        random_response = random.choice(random_responses)
+        await update.message.reply_text(random_response, reply_markup=get_main_keyboard_markup())
+
+
+
 # Функция для получения разметки клавиатуры с кнопками /gif и /help
 def get_main_keyboard_markup():
     keyboard = [
