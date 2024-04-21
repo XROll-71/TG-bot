@@ -78,3 +78,56 @@ def get_main_keyboard_markup():
         [InlineKeyboardButton("Помощь", callback_data='help')]
     ]
     return InlineKeyboardMarkup(keyboard)
+
+# Функция-обработчик для обработки нажатий на кнопки клавиатуры
+async def button_click(update, context):
+    query = update.callback_query
+    if query.data == 'gif':
+        await send_gif(update, context)
+    elif query.data == 'help':
+        await help(update, context)
+
+async def count_to(update, context):
+    try:
+        # Получаем аргумент из сообщения (который должен содержать число)
+        count_to_number = int(context.args[0])
+        if count_to_number > 0:
+            # Считаем от 1 до заданного числа и отправляем сообщение с результатом
+            count_result = '\n'.join(str(i) for i in range(1, count_to_number + 1))
+            await update.message.reply_text(f"От 1 до {count_to_number}:\n{count_result}")
+        else:
+            await update.message.reply_text("Число должно быть положительным.")
+    except (IndexError, ValueError):
+        await update.message.reply_text("Пожалуйста, укажите положительное число после команды /count.")
+
+async def calculator(update, context):
+    try:
+        number = int(context.args[0])
+        result = sum(range(1, number + 1))
+        await update.message.reply_text(f"Сумма от 1 до {number} равна {result}")
+    except (IndexError, ValueError):
+        await update.message.reply_text("Использование: /calc N, где N - целое положительное число.")
+
+# Функция калькулятора для вычисления математических выражений
+async def calculate_expression(update, context):
+    try:
+        expr = ' '.join(context.args)
+        result = eval(expr)
+        await update.message.reply_text(f"Результат выражения '{expr}' равен {result}")
+    except Exception as e:
+        await update.message.reply_text("Ошибка при вычислении выражения.")
+
+async def handle_message(update, context):
+    message_text = update.message.text.lower()
+    if "мне скучно" in message_text:
+        await update.message.reply_text("Я знаю, что делать 😉", reply_markup=get_youtube_button())
+    else:
+        random_response = random.choice(random_responses)
+        await update.message.reply_text(random_response, reply_markup=get_main_keyboard_markup())
+
+# Функция для создания кнопки с ссылкой на YouTube
+def get_youtube_button():
+    keyboard = [
+        [InlineKeyboardButton("Перейти на YouTube", url="https://www.youtube.com/")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
