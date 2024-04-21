@@ -35,6 +35,22 @@ async def send_gif(update, context):
     else:
         await update.message.reply_text("Извините, не удалось получить гифку на данный момент.")
 
+# Функция для получения случайной гифки из Giphy
+def get_random_gif():
+    giphy_api_key = "GNa1pdAQue70ircdkDwDTzZhQbz3o4pa"
+    url = f"https://api.giphy.com/v1/gifs/random?api_key={giphy_api_key}&tag=&rating=g"
+
+    response = requests.get(url)
+    gif_data = response.json()
+    logger.info("Giphy API response: %s", gif_data)
+
+    if "data" in gif_data and "image_url" in gif_data["data"]:
+        gif_url = gif_data["data"]["image_url"]
+        return gif_url
+    else:
+        logger.error("Failed to get gif URL from Giphy API response")
+        return None
+
 # Список рандомных фраз
 random_responses = [
     "Привет!",
