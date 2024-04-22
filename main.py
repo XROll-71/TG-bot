@@ -176,4 +176,5 @@ def main():
     application.run_polling()
 
 # Запускаем функцию main() в случае запуска скрипта.
-if name == 'main':
+if __name__ == '__main__':
+    main()
